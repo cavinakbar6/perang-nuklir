@@ -2,7 +2,31 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-#include <string.h> // Perlu untuk strcmp
+
+typedef enum {
+    INDONESIA,
+    ISRAEL,
+    RUSIA,
+    KORUT,
+    KORSEL,
+    NUM_NEGARA
+} Negara;
+
+const char *negaraNames[] = {
+    "Indonesia",
+    "Israel",
+    "Rusia",
+    "Korut",
+    "Korsel"
+};
+
+int kekuatanNuklir() {
+    return 5; // Semua negara memiliki kekuatan nuklir yang sama
+}
+
+int kekuatanSeranganKritis() {
+    return 5; // Semua negara memiliki kekuatan serangan kritis yang sama
+}
 
 void clearScreen() {
 #ifdef _WIN32
@@ -12,14 +36,37 @@ void clearScreen() {
 #endif
 }
 
-void tampilkanStatusNuklir(int kesehatanPemain1, int kesehatanPemain2, const char *negara1, const char *negara2) {
-    printf("\nNuklir %s: ", negara1);
+void tampilkanKarakterAscii() {
+    printf("       .---.\n");
+    printf("  ___ /_____\\\n");
+    printf(" /\\.-`( '.' )\n");
+    printf("/ /    \\_-/_\n");
+    printf("\\ `-.-\"`'V'//-.\n");
+    printf(" `.__,   |// , \\\n");
+    printf("     |Ll //Ll|\\ \\\n");
+    printf("     |__//   | \\_\\\n");
+    printf("    /---|[]==| / /\n");
+    printf("    \\__/ |   \\/\\/\n");
+    printf("    /_   | Ll_\\|\n");
+    printf("     |`^\"\"\"^`|\n");
+    printf("     |   |   |\n");
+    printf("     |   |   |\n");
+    printf("     |   |   |\n");
+    printf("     |   |   |\n");
+    printf("     L___l___J\n");
+    printf("     |_ | _|\n");
+    printf("    (___|___)\n");
+    printf("     ^^^ ^^^ \n");
+}
+
+void tampilkanStatusNuklir(int kesehatanPemain1, int kesehatanPemain2, Negara negara1, Negara negara2) {
+    printf("\nNuklir %s: ", negaraNames[negara1]);
     for (int i = 0; i < kesehatanPemain1; i++) {
         printf("#");
     }
     printf(" (%d)\n", kesehatanPemain1);
 
-    printf("Nuklir %s: ", negara2);
+    printf("Nuklir %s: ", negaraNames[negara2]);
     for (int i = 0; i < kesehatanPemain2; i++) {
         printf("#");
     }
@@ -37,24 +84,6 @@ int pilihanPemain(const char *negara, bool isAI) {
         scanf("%d", &pilihan);
         return pilihan;
     }
-}
-
-int kekuatanNuklir(const char *negara) {
-    if (strcmp(negara, "Indonesia") == 0) return 3;
-    if (strcmp(negara, "Israel") == 0) return 4;
-    if (strcmp(negara, "Rusia") == 0) return 10;
-    if (strcmp(negara, "Korut") == 0) return 5;
-    if (strcmp(negara, "Korsel") == 0) return 6;
-    return 3;
-}
-
-int kekuatanSeranganKritis(const char *negara) {
-    if (strcmp(negara, "Indonesia") == 0) return 8;
-    if (strcmp(negara, "Israel") == 0) return 7;
-    if (strcmp(negara, "Rusia") == 0) return 4;
-    if (strcmp(negara, "Korut") == 0) return 6;
-    if (strcmp(negara, "Korsel") == 0) return 5;
-    return 4;
 }
 
 void tampilkanArtIndonesia() {
@@ -113,30 +142,7 @@ void tampilkanArtKorsel() {
     printf("\\__|  \\__| \\______/ \\__|  \\__|\\________|\\__|  \\__|       \\______/ \\________|\\________|\\__|  \\__|  \\__|   \\__|  \\__|\\__|  \\__|\n\n");
 }
 
-void tampilkanKarakterAscii() {
-    printf("       .---.\n");
-    printf("  ___ /_____\\\n");
-    printf(" /\\.-`( '.' )\n");
-    printf("/ /    \\_-/_\n");
-    printf("\\ `-.-\"`'V'//-.\n");
-    printf(" `.__,   |// , \\\n");
-    printf("     |Ll //Ll|\\ \\\n");
-    printf("     |__//   | \\_\\\n");
-    printf("    /---|[]==| / /\n");
-    printf("    \\__/ |   \\/\\/\n");
-    printf("    /_   | Ll_\\|\n");
-    printf("     |`^\"\"\"^`|\n");
-    printf("     |   |   |\n");
-    printf("     |   |   |\n");
-    printf("     |   |   |\n");
-    printf("     |   |   |\n");
-    printf("     L___l___J\n");
-    printf("     |_ | _|\n");
-    printf("    (___|___)\n");
-    printf("     ^^^ ^^^ \n");
-}
-
-int main() {
+void tampilkanArtGame() {
     printf(" /$$$$$$$  /$$$$$$$$ /$$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$        /$$   /$$ /$$   /$$ /$$   /$$ /$$       /$$$$$$ /$$$$$$$ \n");
     printf("| $$__  $$| $$_____/| $$__  $$ /$$__  $$| $$$ | $$ /$$__  $$      | $$$ | $$| $$  | $$| $$  /$$/| $$      |_  $$_/| $$__  $$\n");
     printf("| $$  \\ $$| $$      | $$  \\ $$| $$  \\ $$| $$$$| $$| $$  \\__/      | $$$$| $$| $$  | $$| $$ /$$/ | $$        | $$  | $$  \\ $$\n");
@@ -145,36 +151,50 @@ int main() {
     printf("| $$      | $$      | $$  \\ $$| $$  | $$| $$\\  $$$| $$  \\ $$      | $$\\  $$$| $$  | $$| $$\\  $$ | $$        | $$  | $$  \\ $$\n");
     printf("| $$      | $$$$$$$$| $$  | $$| $$  | $$| $$ \\  $$|  $$$$$$/      | $$ \\  $$|  $$$$$$/| $$ \\  $$| $$$$$$$$ /$$$$$$| $$  | $$\n");
     printf("|__/      |________/|__/  |__/|__/  |__/|__/  \\__/ \\______/       |__/  \\__/ \\______/ |__/  \\__/|________/|______/|__/  |__/\n\n");
+}
 
-    const char *negaraList[] = {"Rusia", "Indonesia", "Korut", "Korsel", "Israel"};
+int main() {
     srand(time(0));
+
+    // Tampilkan teks ASCII di awal permainan
+    tampilkanArtGame();
 
     int pilihan1, pilihan2;
     bool isAI1 = false, isAI2 = false;
 
     printf("Pilih negara untuk Pemain 1:\n");
-    for (int i = 0; i < 5; i++) {
-        printf("%d. %s\n", i + 1, negaraList[i]);
+    for (int i = 0; i < NUM_NEGARA; i++) {
+        printf("%d. %s\n", i + 1, negaraNames[i]);
     }
     printf("Masukkan pilihan: ");
     scanf("%d", &pilihan1);
     pilihan1--;
 
-    const char *negaraPemain1 = negaraList[pilihan1];
-    if (strcmp(negaraPemain1, "Indonesia") == 0) {
-        clearScreen();
+    Negara negaraPemain1 = (Negara)pilihan1;
+    clearScreen(); // Clear setelah pemilihan negara 1
+
+    // Jika pemain memilih Indonesia, tampilkan seni ASCII untuk Indonesia
+    if (negaraPemain1 == INDONESIA) {
         tampilkanArtIndonesia();
-    } else if (strcmp(negaraPemain1, "Rusia") == 0) {
-        clearScreen();
+    }
+
+    // Jika pemain memilih Rusia, tampilkan seni ASCII untuk Rusia
+    if (negaraPemain1 == RUSIA) {
         tampilkanArtRusia();
-    } else if (strcmp(negaraPemain1, "Korut") == 0) {
-        clearScreen();
+    }
+
+    // Jika pemain memilih Korut, tampilkan seni ASCII untuk Korut
+    if (negaraPemain1 == KORUT) {
         tampilkanArtKorut();
-    } else if (strcmp(negaraPemain1, "Israel") == 0) {
-        clearScreen();
+    }
+
+    // Jika pemain memilih Israel, tampilkan seni ASCII untuk Israel
+    if (negaraPemain1 == ISRAEL) {
         tampilkanArtIsrael();
-    } else if (strcmp(negaraPemain1, "Korsel") == 0) {
-        clearScreen();
+    }
+
+    // Jika pemain memilih Korsel, tampilkan seni ASCII untuk Korsel
+    if (negaraPemain1 == KORSEL) {
         tampilkanArtKorsel();
     }
 
@@ -184,9 +204,9 @@ int main() {
 
     if (lawan == 1) {
         printf("Pilih negara untuk Pemain 2:\n");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < NUM_NEGARA; i++) {
             if (i != pilihan1) {
-                printf("%d. %s\n", i + 1, negaraList[i]);
+                printf("%d. %s\n", i + 1, negaraNames[i]);
             }
         }
         printf("Masukkan pilihan: ");
@@ -195,48 +215,39 @@ int main() {
     } else {
         isAI2 = true;
         do {
-            pilihan2 = rand() % 5;
+            pilihan2 = rand() % NUM_NEGARA;
         } while (pilihan2 == pilihan1);
     }
+    clearScreen(); // Clear setelah pemilihan negara 2
 
-    const char *negaraPemain2 = negaraList[pilihan2];
-
-    // Teks ASCII sebagai intro umum
-    printf(" /$$      /$$  /$$$$$$  /$$$$$$$  \n");
-    printf("| $$  /$ | $$ /$$__  $$| $$__  $$\n");
-    printf("| $$ /$$$| $$| $$  \\ $$| $$  \\ $$\n");
-    printf("| $$/$$ $$ $$| $$$$$$$$| $$$$$$$/\n");
-    printf("| $$$$_  $$$$| $$__  $$| $$__  $$\n");
-    printf("| $$$/ \\  $$$| $$  | $$| $$  \\ $$\n");
-    printf("| $$/   \\  $$| $$  | $$| $$  | $$\n");
-    printf("|__/     \\__/|__/  |__/|__/  |__/\n");
+    Negara negaraPemain2 = (Negara)pilihan2;
 
     int kesehatanPemain1 = 20;
     int kesehatanPemain2 = 20;
     int giliran = 1;
 
-    printf("Selamat datang di Permainan Perang Nuklir ASCII yang Lebih Rumit!\n");
-
     while (kesehatanPemain1 > 0 && kesehatanPemain2 > 0) {
         tampilkanStatusNuklir(kesehatanPemain1, kesehatanPemain2, negaraPemain1, negaraPemain2);
 
+        // Tampilkan karakter ASCII di awal giliran
+        tampilkanKarakterAscii();
+
         if (giliran == 1) {
-            tampilkanKarakterAscii();
-            printf("\nGiliran %s!\n", negaraPemain1);
-            int pilihan = pilihanPemain(negaraPemain1, isAI1);
-            clearScreen();
+            printf("\nGiliran %s!\n", negaraNames[negaraPemain1]);
+            int pilihan = pilihanPemain(negaraNames[negaraPemain1], isAI1);
+            clearScreen(); // Clear setelah membuat pilihan
             switch (pilihan) {
                 case 1:
-                    printf("%s meluncurkan nuklir dengan kekuatan %d\n", negaraPemain1, kekuatanNuklir(negaraPemain1));
-                    kesehatanPemain2 -= kekuatanNuklir(negaraPemain1);
+                    printf("%s meluncurkan nuklir dengan kekuatan %d\n", negaraNames[negaraPemain1], kekuatanNuklir());
+                    kesehatanPemain2 -= kekuatanNuklir();
                     break;
                 case 2:
-                    printf("%s mempertahankan basis, menambah kesehatan sebesar 2\n", negaraPemain1);
+                    printf("%s mempertahankan basis, menambah kesehatan sebesar 2\n", negaraNames[negaraPemain1]);
                     kesehatanPemain1 += 2;
                     break;
                 case 3:
-                    printf("%s melakukan serangan kritis dengan kekuatan %d\n", negaraPemain1, kekuatanSeranganKritis(negaraPemain1));
-                    kesehatanPemain2 -= kekuatanSeranganKritis(negaraPemain1);
+                    printf("%s melakukan serangan kritis dengan kekuatan %d\n", negaraNames[negaraPemain1], kekuatanSeranganKritis());
+                    kesehatanPemain2 -= kekuatanSeranganKritis();
                     break;
                 default:
                     printf("Pilihan tidak valid, giliran dilewatkan!\n");
@@ -245,22 +256,21 @@ int main() {
             if (kesehatanPemain2 < 0) kesehatanPemain2 = 0;
             giliran = 2;
         } else {
-            tampilkanKarakterAscii();
-            printf("\nGiliran %s!\n", negaraPemain2);
-            int pilihan = pilihanPemain(negaraPemain2, isAI2);
-            clearScreen();
+            printf("\nGiliran %s!\n", negaraNames[negaraPemain2]);
+            int pilihan = pilihanPemain(negaraNames[negaraPemain2], isAI2);
+            clearScreen(); // Clear setelah membuat pilihan
             switch (pilihan) {
                 case 1:
-                    printf("%s meluncurkan nuklir dengan kekuatan %d\n", negaraPemain2, kekuatanNuklir(negaraPemain2));
-                    kesehatanPemain1 -= kekuatanNuklir(negaraPemain2);
+                    printf("%s meluncurkan nuklir dengan kekuatan %d\n", negaraNames[negaraPemain2], kekuatanNuklir());
+                    kesehatanPemain1 -= kekuatanNuklir();
                     break;
                 case 2:
-                    printf("%s mempertahankan basis, menambah kesehatan sebesar 2\n", negaraPemain2);
+                    printf("%s mempertahankan basis, menambah kesehatan sebesar 2\n", negaraNames[negaraPemain2]);
                     kesehatanPemain2 += 2;
                     break;
                 case 3:
-                    printf("%s melakukan serangan kritis dengan kekuatan %d\n", negaraPemain2, kekuatanSeranganKritis(negaraPemain2));
-                    kesehatanPemain1 -= kekuatanSeranganKritis(negaraPemain2);
+                    printf("%s melakukan serangan kritis dengan kekuatan %d\n", negaraNames[negaraPemain2], kekuatanSeranganKritis());
+                    kesehatanPemain1 -= kekuatanSeranganKritis();
                     break;
                 default:
                     printf("Pilihan tidak valid, giliran dilewatkan!\n");
@@ -273,9 +283,9 @@ int main() {
 
     tampilkanStatusNuklir(kesehatanPemain1, kesehatanPemain2, negaraPemain1, negaraPemain2);
     if (kesehatanPemain1 <= 0) {
-        printf("\n%s menang!\n", negaraPemain2);
+        printf("\n%s menang!\n", negaraNames[negaraPemain2]);
     } else {
-        printf("\n%s menang!\n", negaraPemain1);
+        printf("\n%s menang!\n", negaraNames[negaraPemain1]);
     }
 
     return 0;
